@@ -1,13 +1,16 @@
 %% Take directory of images and convert them to skeletons
 function skeletonize_images(input_dir, target_dir)
 
+addpath('/user_data/vayzenbe/GitHub_Repos/MLV_toolbox'); %add MLV toolbox to path
+setup; %setup MLV toolbox directories
+
 if ~exist(target_dir, 'dir')
    mkdir(target_dir)
 end
 
 tic
 im_files=[dir(strcat(input_dir,'/*.jpg'));dir(strcat(input_dir,'/*.png'));dir(strcat(input_dir,'/*.JPEG'))];
-
+im_files
 parfor file_num = 1:length(im_files)
     file_num
     im = imread([im_files(file_num).folder,'/',im_files(file_num).name]); %read image
