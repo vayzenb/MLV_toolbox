@@ -1,4 +1,4 @@
-function [vecLD,img] = traceLineDrawingFromRGB(fileName)
+function [vecLD,img] = traceLineDrawingFromRGB(img)
 % vecLD = traceLineDrawingFromRGB(fileName)
 % Converts an RGB image into a vectorized line drawing
 %
@@ -20,9 +20,9 @@ function [vecLD,img] = traceLineDrawingFromRGB(fileName)
 
 threshold_edge_strength = 0.85;
 
-img = imread(fileName);
+%img = imread(fileName); vlad removed
 imsize = size(img);
-vecLD.originalImage = fileName;
+%vecLD.originalImage = fileName;
 vecLD.imsize = [imsize(2),imsize(1)];
 vecLD.lineMethod = mfilename;
 
