@@ -4,8 +4,8 @@ function convert_to_linedrawings(input_dir, target_dir)
     %Example how to execture from command line
     %matlab -batch "skeletonize_images('/lab_data/behrmannlab/image_sets/masked-ecoset/val/0039_dog','/lab_data/behrmannlab/image_sets/skeletonized-ecoset/val/0039_dog')"
 
-    %input_dir = 'C:\Users\vayze\Desktop\GitHub_Repos\kornet\stim\_things\bear';
-    %target_dir = 'C:\Users\vayze\Desktop\GitHub_Repos\MLV_toolbox\images\bear';
+    input_dir = 'C:\Users\vayze\Documents\copy_me\guitar';
+    target_dir = 'C:\Users\vayze\Desktop\GitHub_Repos\MLV_toolbox\images\guitar';
     
     error_log_name = [target_dir,'error_log.txt'];
     addpath('/user_data/vayzenbe/GitHub_Repos/MLV_toolbox'); %add MLV toolbox to path
@@ -20,6 +20,7 @@ function convert_to_linedrawings(input_dir, target_dir)
     
     %testing without parfor
     parfor file_num = 1:length(im_files)
+        file_num
         try
         
             im = imread([im_files(file_num).folder,'/',im_files(file_num).name]); %read image
@@ -36,13 +37,16 @@ function convert_to_linedrawings(input_dir, target_dir)
 
             %binarize
             line_im = imbinarize(line_im);
+            binary_line = line_im;
             
             %invert colors
             line_im = imcomplement(line_im);
+            inverted_line = line_im;
             
             %convert to double
             line_im = double(line_im);
             line_im = uint8(255 * mat2gray(line_im));
+            double_line = line_im;
             
             % set black background to gray
             line_im(line_im ==0) = 109;
@@ -51,18 +55,18 @@ function convert_to_linedrawings(input_dir, target_dir)
             line_im = imresize(line_im,[224,224]);
             
             %blur a bit more
-            line_im = imgaussfilt(double(line_im),1);
+            %line_im = imgaussfilt(double(line_im),1);
             
             
             
             imwrite(line_im, [target_dir, '/',im_files(file_num).name])
             
         catch
-            disp(['Error with file ',im_files(file_num).name])
-            %add file name to error log
-            fileID = fopen(error_log_name,'a');
-            fprintf(fileID,'%s\n',im_files(file_num).name);
-            fclose(fileID);
+           disp(['Error with file ',im_files(file_num).name])
+           %add file name to error log
+           fileID = fopen(error_log_name,'a');
+           fprintf(fileID,'%s\n',im_files(file_num).name);
+           fclose(fileID);
         end
 
 
