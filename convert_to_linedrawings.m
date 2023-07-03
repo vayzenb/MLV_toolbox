@@ -42,7 +42,6 @@ function convert_to_linedrawings(input_dir, target_dir)
             
             %convert to double
             line_im = double(line_im);
-            
             line_im = uint8(255 * mat2gray(line_im));
             
             % set black background to gray
@@ -51,7 +50,8 @@ function convert_to_linedrawings(input_dir, target_dir)
             %resize to 224x224
             line_im = imresize(line_im,[224,224]);
             
-            %
+            %blur a bit more
+            line_im = imgaussfilt(double(line_im),1);
             
             
             
