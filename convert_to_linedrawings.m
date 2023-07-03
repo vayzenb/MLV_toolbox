@@ -20,21 +20,12 @@ function skeletonize_images(input_dir, target_dir)
         try
             im = imread([im_files(file_num).folder,'/',im_files(file_num).name]); %read image
 
-            %blur image
-            im = imgaussfilt(im,1);
-
             im_resize = imresize(im,[150,150]); %resize image for efficiency
 
             img = traceLineDrawingFromRGB(im_resize); % convert image to edge map
 
             im_overlay = renderLinedrawing(img,[], [150,150], 2, [0,0,0]); % convert edgemap to line drawing
 
-        
-            MAT = computeMAT(im_overlay);  %calcualte skeleton from edgemap
-            
-            mat_blur = imgaussfilt(double(MAT.skeleton),1); % expand skel values by blurring a bit
-            
-            
             %binarize
             mat_blur = imbinarize(mat_blur);
             
